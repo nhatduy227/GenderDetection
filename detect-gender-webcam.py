@@ -9,7 +9,7 @@ default = cv2.VideoCapture('default.mp4')
 
 def loopVideo(status, cap, frame):
     if status:
-        frame = cv2.resize(frame,(400,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
+        frame = cv2.resize(frame,(300,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
         cv2.imshow("Image", frame)
     else:
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
