@@ -9,7 +9,7 @@ default = cv2.VideoCapture('default.mp4')
 
 def loopVideo(status, cap, frame):
     if status:
-        frame = cv2.resize(frame,(540,960),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
+        frame = cv2.resize(frame,(400,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
         cv2.imshow("Image", frame)
     else:
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -27,10 +27,10 @@ def detectionCam():
         idx = np.argmax(confidence)
         label = label[idx]
         gender = label
-        label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
-        Y = startY - 10 if startY - 10 > 10 else startY + 10
-        cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                    (0,255,0), 2)
+        # label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
+        # Y = startY - 10 if startY - 10 > 10 else startY + 10
+        # cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+        #             (0,255,0), 2)
     return gender
 
 while webcam.isOpened():
@@ -40,8 +40,8 @@ while webcam.isOpened():
     defaultStatus, defaultFrame = default.read()
     gender = detectionCam()
 
-    if status: 
-        cv2.imshow("Real-time gender detection", frame)
+    # if status: 
+    #     cv2.imshow("Real-time gender detection", frame)
 
     if gender == "male":
         loopVideo(maleStatus, male, maleFrame)
