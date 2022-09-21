@@ -1,15 +1,29 @@
 import cvlib as cv
 import cv2
 import numpy as np
+import os
 
 webcam = cv2.VideoCapture(0)
-male = cv2.VideoCapture('male.mp4')
-female = cv2.VideoCapture('female.mp4')
-default = cv2.VideoCapture('default.mp4')
+cv2.namedWindow("Image")
+cv2.moveWindow("Image", 0,0)
 
+def setup():
+    malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
+    maleVideo = "/" + os.listdir(malePath)[0]
+    male = cv2.VideoCapture(malePath + maleVideo)
+
+    femalePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/female"))
+    femaleVideo = "/" + os.listdir(femalePath)[0]
+    female = cv2.VideoCapture(femalePath + femaleVideo)
+
+    defaultPath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/default"))
+    defaultVideo = "/" + os.listdir(defaultPath)[0]
+    default = cv2.VideoCapture(defaultPath + defaultVideo)
+    return male, female, default
+    
 def loopVideo(status, cap, frame):
     if status:
-        frame = cv2.resize(frame,(300,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
+        frame = cv2.resize(frame,(337,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
         cv2.imshow("Image", frame)
     else:
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -33,6 +47,7 @@ def detectionCam():
         #             (0,255,0), 2)
     return gender
 
+male, female, default = setup()
 while webcam.isOpened():
     status, frame = webcam.read()
     maleStatus, maleFrame = male.read()
