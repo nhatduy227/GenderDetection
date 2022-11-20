@@ -4,8 +4,9 @@ import numpy as np
 import os
 
 webcam = cv2.VideoCapture(0)
-cv2.namedWindow("Image")
+cv2.namedWindow("Image", cv2.WINDOW_NORMAL)
 cv2.moveWindow("Image", 0,0)
+cv2.setWindowProperty ("Image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 def setup():
     malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
@@ -23,7 +24,7 @@ def setup():
     
 def loopVideo(status, cap, frame):
     if status:
-        frame = cv2.resize(frame,(337,600),fx=0,fy=0, interpolation = cv2.INTER_CUBIC)        
+        frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)  
         cv2.imshow("Image", frame)
     else:
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -64,6 +65,7 @@ while webcam.isOpened():
         loopVideo(femaleStatus, female, femaleFrame)
     else:
         loopVideo(defaultStatus, default, defaultFrame)
+
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
