@@ -22,10 +22,13 @@ def setup():
     default = cv2.VideoCapture(defaultPath + defaultVideo)
     return male, female, default
     
-def loopVideo(status, cap, frame):
+def loopVideo(status, cap, frame, gender):
     if status:
-        frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)  
-        cv2.imshow("Image", frame)
+        if gender == "male" or gender == "female":
+            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)  
+            cv2.imshow("Image", frame)
+        else:
+            cv2.imshow("Image", frame)
     else:
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
@@ -60,12 +63,11 @@ while webcam.isOpened():
     #     cv2.imshow("Real-time gender detection", frame)
 
     if gender == "male":
-        loopVideo(maleStatus, male, maleFrame)
+        loopVideo(maleStatus, male, maleFrame, gender)
     elif gender == "female":
-        loopVideo(femaleStatus, female, femaleFrame)
+        loopVideo(femaleStatus, female, femaleFrame, gender)
     else:
-        loopVideo(defaultStatus, default, defaultFrame)
-
+        loopVideo(defaultStatus, default, defaultFrame, gender)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
