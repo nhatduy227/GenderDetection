@@ -9,15 +9,18 @@ cv2.moveWindow("Image", 0,0)
 cv2.setWindowProperty ("Image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 def setup():
-    malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
+    # malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
+    malePath = os.path.normpath(os.path.expanduser("~/OneDrive/Desktop/GenderDetection/male"))
     maleVideo = "/" + os.listdir(malePath)[0]
     male = cv2.VideoCapture(malePath + maleVideo)
 
-    femalePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/female"))
+    # femalePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/female"))
+    femalePath = os.path.normpath(os.path.expanduser("~/OneDrive/Desktop/GenderDetection/female"))
     femaleVideo = "/" + os.listdir(femalePath)[0]
     female = cv2.VideoCapture(femalePath + femaleVideo)
 
-    defaultPath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/default"))
+    # defaultPath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/default"))
+    defaultPath = os.path.normpath(os.path.expanduser("~/OneDrive/Desktop/GenderDetection/default"))
     defaultVideo = "/" + os.listdir(defaultPath)[0]
     default = cv2.VideoCapture(defaultPath + defaultVideo)
     return male, female, default
@@ -41,10 +44,13 @@ def detectionCam():
         (endX,endY) = min(frame.shape[1]-1, f[2]+padding), min(frame.shape[0]-1, f[3]+padding)
         cv2.rectangle(frame, (startX,startY), (endX,endY), (0,255,0), 2)
         face_crop = np.copy(frame[startY:endY, startX:endX]) 
-        (label, confidence) = cv.detect_gender(face_crop)
-        idx = np.argmax(confidence)
-        label = label[idx]
-        gender = label
+        try:
+            (label, confidence) = cv.detect_gender(face_crop)
+            idx = np.argmax(confidence)
+            label = label[idx]
+            gender = label
+        except:
+            print("Wrong image input")
         # label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
         # Y = startY - 10 if startY - 10 > 10 else startY + 10
         # cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
