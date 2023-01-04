@@ -51,10 +51,10 @@ def detectionCam():
             gender = label
         except:
             print("Wrong image input")
-        # label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
-        # Y = startY - 10 if startY - 10 > 10 else startY + 10
-        # cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-        #             (0,255,0), 2)
+        label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
+        Y = startY - 10 if startY - 10 > 10 else startY + 10
+        cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                    (0,255,0), 2)
     return gender
 
 male, female, default = setup()
