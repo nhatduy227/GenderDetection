@@ -67,8 +67,8 @@ while webcam.isOpened():
     defaultStatus, defaultFrame = default.read()
     gender = detectionCam()
 
-    # if status: 
-    #     cv2.imshow("Real-time gender detection", frame)
+    if status: 
+        cv2.imshow("Real-time gender detection", frame)
 
     if gender == "male":
         loopVideo(maleStatus, male, maleFrame, gender)
