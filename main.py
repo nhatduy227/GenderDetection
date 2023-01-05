@@ -36,26 +36,28 @@ def loopVideo(status, cap, frame, gender):
        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
 def detectionCam(): 
-    padding = 20
-    gender = ""
-    face, confidence = cv.detect_face(frame)
-    for idx, f in enumerate(face):        
-        (startX,startY) = max(0, f[0]-padding), max(0, f[1]-padding)
-        (endX,endY) = min(frame.shape[1]-1, f[2]+padding), min(frame.shape[0]-1, f[3]+padding)
-        cv2.rectangle(frame, (startX,startY), (endX,endY), (0,255,0), 2)
-        face_crop = np.copy(frame[startY:endY, startX:endX]) 
-        try:
+    try:
+        padding = 20
+        gender = ""
+        face, confidence = cv.detect_face(frame)
+        for idx, f in enumerate(face):        
+            (startX,startY) = max(0, f[0]-padding), max(0, f[1]-padding)
+            (endX,endY) = min(frame.shape[1]-1, f[2]+padding), min(frame.shape[0]-1, f[3]+padding)
+            cv2.rectangle(frame, (startX,startY), (endX,endY), (0,255,0), 2)
+            face_crop = np.copy(frame[startY:endY, startX:endX]) 
+            
             (label, confidence) = cv.detect_gender(face_crop)
             idx = np.argmax(confidence)
             label = label[idx]
             gender = label
-        except:
+            
+            label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
+            Y = startY - 10 if startY - 10 > 10 else startY + 10
+            cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
+                        (0,255,0), 2)
+        return gender
+    except:
             print("Wrong image input")
-        label = "{}: {:.2f}%".format(label, confidence[idx] * 100)
-        Y = startY - 10 if startY - 10 > 10 else startY + 10
-        cv2.putText(frame, label, (startX,Y), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                    (0,255,0), 2)
-    return gender
 
 male, female, default = setup()
 while webcam.isOpened():
