@@ -41,7 +41,7 @@ def setup():
 
 def loopVideo(status, cap, frame, gender):
     if status:
-        if gender == "male" or gender == "female":
+        if gender == "male" or gender == "woman":
             frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
             cv2.imshow("Image", frame)
         else:
@@ -144,7 +144,7 @@ while webcam.isOpened():
 
     if gender == "man":
         loopVideo(maleStatus, male, maleFrame, gender)
-    elif gender == "women":
+    elif gender == "woman":
         loopVideo(femaleStatus, female, femaleFrame, gender)
     else:
         loopVideo(defaultStatus, default, defaultFrame, gender)
