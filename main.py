@@ -81,7 +81,7 @@ def detectionCamOldVersion():
         print("Wrong image input")
 
 
-def detectionCam():
+def detectionCam(frame):
     try:
         gender = ""
         # apply face detection
@@ -131,26 +131,30 @@ def detectionCam():
         print("Wrong image input")
 
 
-male, female, default = setup()
-while webcam.isOpened():
-    status, frame = webcam.read()
-    maleStatus, maleFrame = male.read()
-    femaleStatus, femaleFrame = female.read()
-    defaultStatus, defaultFrame = default.read()
-    gender = detectionCam()
+def mainProcess():
+    male, female, default = setup()
+    while webcam.isOpened():
+        status, frame = webcam.read()
+        maleStatus, maleFrame = male.read()
+        femaleStatus, femaleFrame = female.read()
+        defaultStatus, defaultFrame = default.read()
+        gender = detectionCam(frame)
 
-    if status:
-        cv2.imshow("Real-time gender detection", frame)
+        # if status:
+        #     cv2.imshow("Real-time gender detection", frame)
 
-    if gender == "man":
-        loopVideo(maleStatus, male, maleFrame, gender)
-    elif gender == "woman":
-        loopVideo(femaleStatus, female, femaleFrame, gender)
-    else:
-        loopVideo(defaultStatus, default, defaultFrame, gender)
+        if gender == "man":
+            loopVideo(maleStatus, male, maleFrame, gender)
+        elif gender == "woman":
+            loopVideo(femaleStatus, female, femaleFrame, gender)
+        else:
+            loopVideo(defaultStatus, default, defaultFrame, gender)
 
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
 
-webcam.release()
-cv2.destroyAllWindows()
+    webcam.release()
+    cv2.destroyAllWindows()
+
+
+mainProcess()
