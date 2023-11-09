@@ -16,24 +16,28 @@ cv2.setWindowProperty("Image", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
 
 def setup():
-    # malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
-    malePath = os.path.normpath(
-        os.path.expanduser("~/OneDrive/Desktop/GenderDetection/male")
-    )
+    malePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/male"))
+    # malePath = os.path.normpath(
+    #     os.path.expanduser("~/OneDrive/Desktop/GenderDetection/male")
+    # )
     maleVideo = "/" + os.listdir(malePath)[0]
     male = cv2.VideoCapture(malePath + maleVideo)
 
-    # femalePath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/female"))
     femalePath = os.path.normpath(
-        os.path.expanduser("~/OneDrive/Desktop/GenderDetection/female")
+        os.path.expanduser("~/Desktop/GenderDetection/female")
     )
+    # femalePath = os.path.normpath(
+    #     os.path.expanduser("~/OneDrive/Desktop/GenderDetection/female")
+    # )
     femaleVideo = "/" + os.listdir(femalePath)[0]
     female = cv2.VideoCapture(femalePath + femaleVideo)
 
-    # defaultPath = os.path.normpath(os.path.expanduser("~/Desktop/GenderDetection/default"))
     defaultPath = os.path.normpath(
-        os.path.expanduser("~/OneDrive/Desktop/GenderDetection/default")
+        os.path.expanduser("~/Desktop/GenderDetection/default")
     )
+    # defaultPath = os.path.normpath(
+    #     os.path.expanduser("~/OneDrive/Desktop/GenderDetection/default")
+    # )
     defaultVideo = "/" + os.listdir(defaultPath)[0]
     default = cv2.VideoCapture(defaultPath + defaultVideo)
     return male, female, default
